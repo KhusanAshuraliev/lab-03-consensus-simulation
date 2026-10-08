@@ -1,0 +1,398 @@
+{
+ "runs": {
+  "1": {
+   "events": [
+    "phase 1 (connected)  distinct tips=1 heights=[4] converged=True",
+    "PARTITION  A=['node0', 'node1', 'node2', 'node3', 'node4', 'node5']  B=['node6', 'node7', 'node8', 'node9', 'node10', 'node11']",
+    "phase 2 (split)      distinct tips=2 heights=[7, 8]  blocks added: A=+4 B=+3",
+    "HEAL",
+    "  just after heal    distinct tips=1 heights=[12]  (an equal-work tie waits for the next block)",
+    "phase 3 (healed)     distinct tips=1 heights=[16] converged=True"
+   ],
+   "miners": [
+    "node0",
+    "node3",
+    "node6",
+    "node9"
+   ],
+   "group_a": [
+    "node0",
+    "node1",
+    "node2",
+    "node3",
+    "node4",
+    "node5"
+   ],
+   "group_b": [
+    "node6",
+    "node7",
+    "node8",
+    "node9",
+    "node10",
+    "node11"
+   ],
+   "split_heights": {
+    "A": 8,
+    "B": 7
+   },
+   "fork_height": 4,
+   "lighter_side": "B",
+   "private_branch_length": 3,
+   "all_reorg_depths": {
+    "node0": [],
+    "node1": [],
+    "node2": [],
+    "node3": [],
+    "node4": [],
+    "node5": [],
+    "node6": [
+     3
+    ],
+    "node7": [
+     3
+    ],
+    "node8": [
+     3
+    ],
+    "node9": [
+     3
+    ],
+    "node10": [
+     3
+    ],
+    "node11": [
+     3
+    ]
+   },
+   "heal_reorg_depths": {
+    "node0": [],
+    "node1": [],
+    "node2": [],
+    "node3": [],
+    "node4": [],
+    "node5": [],
+    "node6": [
+     3
+    ],
+    "node7": [
+     3
+    ],
+    "node8": [
+     3
+    ],
+    "node9": [
+     3
+    ],
+    "node10": [
+     3
+    ],
+    "node11": [
+     3
+    ]
+   },
+   "final_distinct_tips": 1,
+   "final_heights": [
+    16
+   ],
+   "txs_returned": 6,
+   "split_txs_confirmed": 2,
+   "delivered": 2185,
+   "dropped": 203,
+   "report": "node     side  height  tip           mined  recv  reorgs  depths\n------------------------------------------------------------------------\nnode0    A         16  e145dc61dc6d      7     9       0  []\nnode1    A         16  e145dc61dc6d      0    16       0  []\nnode2    A         16  e145dc61dc6d      0    16       0  []\nnode3    A         16  e145dc61dc6d      4    12       0  []\nnode4    A         16  e145dc61dc6d      0    16       0  []\nnode5    A         16  e145dc61dc6d      0    16       0  []\nnode6    B         16  e145dc61dc6d      7     8       1  [3]\nnode7    B         16  e145dc61dc6d      0    15       1  [3]\nnode8    B         16  e145dc61dc6d      0    15       1  [3]\nnode9    B         16  e145dc61dc6d      1    14       1  [3]\nnode10   B         16  e145dc61dc6d      0    15       1  [3]\nnode11   B         16  e145dc61dc6d      0    15       1  [3]\n\nmessages delivered : 2185\nmessages dropped   : 203  (blocked by the partition)\nconsensus reached  : True"
+  },
+  "7": {
+   "events": [
+    "phase 1 (connected)  distinct tips=1 heights=[7] converged=True",
+    "PARTITION  A=['node0', 'node1', 'node2', 'node3', 'node4', 'node5']  B=['node6', 'node7', 'node8', 'node9', 'node10', 'node11']",
+    "phase 2 (split)      distinct tips=2 heights=[8, 9]  blocks added: A=+2 B=+1",
+    "HEAL",
+    "  just after heal    distinct tips=1 heights=[11]  (an equal-work tie waits for the next block)",
+    "phase 3 (healed)     distinct tips=1 heights=[17] converged=True"
+   ],
+   "miners": [
+    "node0",
+    "node3",
+    "node6",
+    "node9"
+   ],
+   "group_a": [
+    "node0",
+    "node1",
+    "node2",
+    "node3",
+    "node4",
+    "node5"
+   ],
+   "group_b": [
+    "node6",
+    "node7",
+    "node8",
+    "node9",
+    "node10",
+    "node11"
+   ],
+   "split_heights": {
+    "A": 9,
+    "B": 8
+   },
+   "fork_height": 7,
+   "lighter_side": "B",
+   "private_branch_length": 1,
+   "all_reorg_depths": {
+    "node0": [],
+    "node1": [],
+    "node2": [],
+    "node3": [],
+    "node4": [],
+    "node5": [],
+    "node6": [
+     1
+    ],
+    "node7": [
+     1
+    ],
+    "node8": [
+     1
+    ],
+    "node9": [
+     1
+    ],
+    "node10": [
+     1
+    ],
+    "node11": [
+     1
+    ]
+   },
+   "heal_reorg_depths": {
+    "node0": [],
+    "node1": [],
+    "node2": [],
+    "node3": [],
+    "node4": [],
+    "node5": [],
+    "node6": [
+     1
+    ],
+    "node7": [
+     1
+    ],
+    "node8": [
+     1
+    ],
+    "node9": [
+     1
+    ],
+    "node10": [
+     1
+    ],
+    "node11": [
+     1
+    ]
+   },
+   "final_distinct_tips": 1,
+   "final_heights": [
+    17
+   ],
+   "txs_returned": 6,
+   "split_txs_confirmed": 2,
+   "delivered": 2084,
+   "dropped": 200,
+   "report": "node     side  height  tip           mined  recv  reorgs  depths\n------------------------------------------------------------------------\nnode0    A         17  80357b8a14ab      4    13       0  []\nnode1    A         17  80357b8a14ab      0    17       0  []\nnode2    A         17  80357b8a14ab      0    17       0  []\nnode3    A         17  80357b8a14ab      7    10       0  []\nnode4    A         17  80357b8a14ab      0    17       0  []\nnode5    A         17  80357b8a14ab      0    17       0  []\nnode6    B         17  80357b8a14ab      5    11       1  [1]\nnode7    B         17  80357b8a14ab      0    16       1  [1]\nnode8    B         17  80357b8a14ab      0    16       1  [1]\nnode9    B         17  80357b8a14ab      2    14       1  [1]\nnode10   B         17  80357b8a14ab      0    16       1  [1]\nnode11   B         17  80357b8a14ab      0    16       1  [1]\n\nmessages delivered : 2084\nmessages dropped   : 200  (blocked by the partition)\nconsensus reached  : True"
+  },
+  "42": {
+   "events": [
+    "phase 1 (connected)  distinct tips=1 heights=[6] converged=True",
+    "PARTITION  A=['node0', 'node1', 'node2', 'node3', 'node4', 'node5']  B=['node6', 'node7', 'node8', 'node9', 'node10', 'node11']",
+    "phase 2 (split)      distinct tips=3 heights=[9, 10]  blocks added: A=+4 B=+4",
+    "HEAL",
+    "  just after heal    distinct tips=1 heights=[12]  (an equal-work tie waits for the next block)",
+    "phase 3 (healed)     distinct tips=1 heights=[20] converged=True"
+   ],
+   "miners": [
+    "node0",
+    "node3",
+    "node6",
+    "node9"
+   ],
+   "group_a": [
+    "node0",
+    "node1",
+    "node2",
+    "node3",
+    "node4",
+    "node5"
+   ],
+   "group_b": [
+    "node6",
+    "node7",
+    "node8",
+    "node9",
+    "node10",
+    "node11"
+   ],
+   "split_heights": {
+    "A": 10,
+    "B": 10
+   },
+   "fork_height": 6,
+   "lighter_side": "",
+   "private_branch_length": 0,
+   "all_reorg_depths": {
+    "node0": [
+     4
+    ],
+    "node1": [
+     1,
+     4
+    ],
+    "node2": [
+     1,
+     4
+    ],
+    "node3": [
+     1,
+     4
+    ],
+    "node4": [
+     1,
+     4
+    ],
+    "node5": [
+     1,
+     4
+    ],
+    "node6": [
+     1
+    ],
+    "node7": [
+     1
+    ],
+    "node8": [
+     1
+    ],
+    "node9": [
+     1
+    ],
+    "node10": [
+     1
+    ],
+    "node11": [
+     1
+    ]
+   },
+   "heal_reorg_depths": {
+    "node0": [
+     4
+    ],
+    "node1": [
+     4
+    ],
+    "node2": [
+     4
+    ],
+    "node3": [
+     4
+    ],
+    "node4": [
+     4
+    ],
+    "node5": [
+     4
+    ],
+    "node6": [],
+    "node7": [],
+    "node8": [],
+    "node9": [],
+    "node10": [],
+    "node11": []
+   },
+   "final_distinct_tips": 1,
+   "final_heights": [
+    20
+   ],
+   "txs_returned": 6,
+   "split_txs_confirmed": 2,
+   "delivered": 2321,
+   "dropped": 234,
+   "report": "node     side  height  tip           mined  recv  reorgs  depths\n------------------------------------------------------------------------\nnode0    A         20  6ccc4f273888      4    17       1  [4]\nnode1    A         20  6ccc4f273888      0    21       2  [1, 4]\nnode2    A         20  6ccc4f273888      0    21       2  [1, 4]\nnode3    A         20  6ccc4f273888      8    13       2  [1, 4]\nnode4    A         20  6ccc4f273888      0    21       2  [1, 4]\nnode5    A         20  6ccc4f273888      0    21       2  [1, 4]\nnode6    B         20  6ccc4f273888      8    14       1  [1]\nnode7    B         20  6ccc4f273888      0    22       1  [1]\nnode8    B         20  6ccc4f273888      0    22       1  [1]\nnode9    B         20  6ccc4f273888      5    16       1  [1]\nnode10   B         20  6ccc4f273888      0    22       1  [1]\nnode11   B         20  6ccc4f273888      0    22       1  [1]\n\nmessages delivered : 2321\nmessages dropped   : 234  (blocked by the partition)\nconsensus reached  : True"
+  }
+ },
+ "duration_sweep": {
+  "0.5": {
+   "depths": [
+    0,
+    1,
+    0,
+    1,
+    0,
+    1,
+    0,
+    0,
+    1,
+    0
+   ],
+   "mean": 0.4
+  },
+  "1.0": {
+   "depths": [
+    1,
+    2,
+    0,
+    2,
+    1,
+    2,
+    2,
+    0,
+    1,
+    1
+   ],
+   "mean": 1.2
+  },
+  "2.0": {
+   "depths": [
+    3,
+    4,
+    3,
+    3,
+    4,
+    5,
+    2,
+    4,
+    6,
+    4
+   ],
+   "mean": 3.8
+  },
+  "4.0": {
+   "depths": [
+    5,
+    8,
+    7,
+    6,
+    6,
+    7,
+    2,
+    8,
+    8,
+    6
+   ],
+   "mean": 6.3
+  },
+  "8.0": {
+   "depths": [
+    8,
+    18,
+    17,
+    12,
+    13,
+    16,
+    12,
+    14,
+    17,
+    17
+   ],
+   "mean": 14.4
+  }
+ }
+}

@@ -1,0 +1,5 @@
+q=0.1 z=5: formula 0.0009137  Monte Carlo 0.0009012  ratio 0.986
+q=0.1 z=6: formula 0.0002428  Monte Carlo 0.0002334  ratio 0.961
+q=0.3 z=5: formula 0.1773523  Monte Carlo 0.1766500  ratio 0.996
+{0.1: 5, 0.15: 8, 0.2: 11, 0.25: 15, 0.3: 24, 0.35: 41, 0.4: 89, 0.45: 340}
+wrote evidence/data/doublespend.json

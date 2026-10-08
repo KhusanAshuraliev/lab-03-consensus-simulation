@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Lab 03 — Consensus: proof of work, proof of stake and gossip networking · Khusanjon Ashuraliev</title>
+<style>
+  @page { size: A4; margin: 18mm 17mm 18mm 17mm; }
+  body { font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; font-size: 10.2pt; line-height: 1.42; color: #1c1c1c; margin: 0; }
+  h1 { font-size: 21pt; margin: 0 0 2pt; }
+  h2 { font-size: 14pt; margin: 18pt 0 5pt; break-after: avoid; }
+  h3 { font-size: 11pt; margin: 12pt 0 3pt; break-after: avoid; }
+  p { margin: 0 0 7pt; }
+  .sub { color: #555; margin-bottom: 9pt; }
+  table { border-collapse: collapse; width: 100%; margin: 5pt 0 9pt; font-size: 9.2pt; break-inside: avoid; }
+  th { text-align: left; background: #f1f3f5; border-bottom: 1.2pt solid #333; padding: 3pt 6pt; }
+  td { border-bottom: 0.6pt solid #d5d8dc; padding: 3pt 6pt; vertical-align: top; }
+  td.n, th.n { text-align: right; }
+  code, pre { font-family: Menlo, Consolas, monospace; }
+  code { font-size: 8.8pt; }
+  pre { font-size: 7.3pt; line-height: 1.3; background: #f6f7f8; border: 0.6pt solid #d5d8dc; padding: 6pt 8pt; margin: 4pt 0 9pt; white-space: pre-wrap; break-inside: avoid; }
+  .small { font-size: 8.6pt; color: #555; }
+  .formula { font-family: Georgia, "Times New Roman", serif; font-size: 10.6pt; text-align: center; margin: 5pt 0 8pt; }
+  ul { margin: 0 0 7pt; padding-left: 16pt; }
+  li { margin-bottom: 2pt; }
+  figure { margin: 6pt 0 9pt; text-align: center; break-inside: avoid; }
+  figure img { width: 78%; border: 0.6pt solid #d5d8dc; }
+  figcaption { font-size: 8.6pt; color: #555; margin-top: 2pt; }
+</style>
+</head>
+<body>
+
+<h1>Lab 03 — Consensus: proof of work, proof of stake and gossip networking</h1>
+<div class="sub">Khusanjon Ashuraliev · Introduction to Blockchain Programming · Óbuda University, NIK · October 2026</div>
+
+<table>
+<tr><th style="width:18%">Item</th><th>Value</th></tr>
+<tr><td>Repository</td><td><code>https://github.com/KhusanAshuraliev/lab-03-consensus-simulation</code></td></tr>
+<tr><td>Stack</td><td>Python 3.12 with uv. Standard library only (<code>hashlib</code>, <code>struct</code>, <code>asyncio</code>, <code>multiprocessing</code>, <code>statistics</code>, <code>random</code>). No blockchain, networking or consensus library.</td></tr>
+<tr><td>Evidence</td><td>Demo and test output in <code>evidence/</code>; the raw numbers behind every figure in <code>evidence/data/*.json</code></td></tr>
+<tr><td>Reproduce</td><td><code>uv sync &amp;&amp; uv run pytest &amp;&amp; uv run python -m consensus</code>; measurements with <code>experiments/collect.py</code>, figures with <code>experiments/charts.py</code></td></tr>
+<tr><td>Tests</td><td><b>95 passed</b>: the course suite of 42 tests, copied unchanged, plus 53 tests of my own.</td></tr>
+<tr><td>Machine</td><td>Apple silicon Mac, 8 cores, macOS 15.3. One process computes about 1.5 million block hashes per second.</td></tr>
+</table>
+<p class="small">I took all numbers below from runs of my own implementation. I kept the module and function names of the course suite so that it runs unchanged; the code is my own. Timing results change from run to run, so I report what I measured.</p>
+
+<h2>1. Part A — block intervals and memorylessness</h2>
+<p>I mined 200 blocks with one worker process and recorded the time each block took. My hash loop is faster than the reference (I hash the constant part of the header once and reuse that state), so at difficulty 1 a block takes only about 0.04 s. I therefore fixed the difficulty at 8, which gives about 524,000 expected hashes and a third of a second per block, and I switched retargeting off for this run: intervals measured at several difficulties would be a mixture of distributions and not one.</p>
+
+<figure><img src="figures/intervals.svg" alt="Histogram of block intervals"><figcaption>Figure 1. 200 block intervals, one worker, difficulty 8. Dashed: the bin counts an exponential distribution with the same mean predicts.</figcaption></figure>
+
+<table>
+<tr><th style="width:30%">Statistic</th><th class="n">Measured</th><th class="n">Exponential prediction</th><th>Range in the lab sheet</th></tr>
+<tr><td>mean interval</td><td class="n">0.3369 s</td><td class="n">524,288 / 1.54 M H/s = 0.340 s</td><td></td></tr>
+<tr><td>median interval</td><td class="n">0.2277 s</td><td class="n">0.2335 s</td><td></td></tr>
+<tr><td>standard deviation</td><td class="n">0.3233 s</td><td class="n">0.3369 s</td><td></td></tr>
+<tr><td><b>median / mean</b></td><td class="n"><b>0.676</b></td><td class="n">ln 2 = 0.693</td><td>0.60–0.80 ✓</td></tr>
+<tr><td><b>stdev / mean</b></td><td class="n"><b>0.960</b></td><td class="n">1.0</td><td>0.80–1.20 ✓</td></tr>
+<tr><td>min / max interval</td><td class="n">0.0007 s / 1.84 s</td><td class="n"></td><td>more than a factor of ten ✓</td></tr>
+</table>
+<p class="small">The ratios are noisy for small samples. The demo run saved in <code>evidence/demo_pow.txt</code> has only 100 blocks and gave 0.565 and 1.039; with 100 samples the standard error of median / mean is about 0.07. The three 600-block runs of section 8 gave 0.634, 0.683 and 0.684.</p>
+<p>The histogram is strongly skewed to the right. The first bin is the tallest, the counts fall off roughly geometrically, and there is no peak near the mean. The shortest and the longest block differ by a factor of about 2,600.</p>
+
+<h3>Why the median is below the mean</h3>
+<p>Every hash is an independent trial that succeeds with the same probability p = target / 2<sup>256</sup>. The number of trials until the first success is geometric, and with p this small it is exponential for all practical purposes: P(T &gt; t) = e<sup>−t/μ</sup>. Half of the blocks arrive before t = μ·ln 2 ≈ 0.69 μ, so the median is 69 % of the mean. The mean is higher because a few very long intervals pull it up, while nothing can pull it down below zero. In my sample the longest interval is 5.5 times the mean.</p>
+<p>The search is <b>memoryless</b>: P(T &gt; s + t | T &gt; s) = P(T &gt; t). Having hashed for a second without success does not bring the miner any closer to a block; the next hash has exactly the same chance as the first one.</p>
+
+<h3>What would go wrong without memorylessness</h3>
+<p>Because no attempt builds on an earlier one, a miner with a share h of the hash rate makes a share h of all attempts and so finds a share h of the blocks. The reward is proportional to the work, for small and large miners alike, and a miner loses nothing when somebody else finds a block and everybody starts on a new header.</p>
+<p>Now suppose the puzzle had progress, for example a computation of fixed length where the first to finish wins. Then accumulated work would count. The fastest miner would finish first almost every time, so a miner with 30 % of the hash rate would win far more than 30 % of the blocks and a small miner would win almost none. Each new block would also throw away the partial progress of all the losers, which hurts the small ones most. Mining would stop being a lottery with tickets in proportion to hash rate and would become a race that the largest participant always wins, and the system would centralise.</p>
+<p>My test suite contains a deterministic version of this measurement: with fixed timestamps the winning nonce is fixed, and over 150 blocks the number of attempts per block gives both ratios inside the ranges above.</p>
+
+<h2>2. Part A — difficulty retargeting</h2>
+<p>For the difficulty plot I used the recipe of the lab sheet, <code>simulate_mining(blocks=200, workers=1, target_seconds=1.0)</code>: a retarget every 10 blocks, with a goal of 10 s per window, starting at difficulty 1. This gives 20 windows.</p>
+
+<figure><img src="figures/difficulty.svg" alt="Difficulty per retarget window"><figcaption>Figure 2. Difficulty in each of the 20 windows and after the last one. Dashed: the difficulty at which my hash rate needs exactly 1 s per block.</figcaption></figure>
+
+<table>
+<tr><th>Window</th><th class="n">1</th><th class="n">2</th><th class="n">3</th><th class="n">4</th><th class="n">5</th><th class="n">6</th><th class="n">7</th><th class="n">8</th><th class="n">9</th><th class="n">10</th></tr>
+<tr><td>difficulty</td><td class="n">1</td><td class="n">4</td><td class="n">16</td><td class="n">26</td><td class="n">29</td><td class="n">34</td><td class="n">55</td><td class="n">37</td><td class="n">24</td><td class="n">22</td></tr>
+<tr><td>window time (s)</td><td class="n">0.23</td><td class="n">1.34</td><td class="n">5.97</td><td class="n">8.75</td><td class="n">8.53</td><td class="n">6.07</td><td class="n">14.53</td><td class="n">15.10</td><td class="n">10.86</td><td class="n">10.76</td></tr>
+<tr><th>Window</th><th class="n">11</th><th class="n">12</th><th class="n">13</th><th class="n">14</th><th class="n">15</th><th class="n">16</th><th class="n">17</th><th class="n">18</th><th class="n">19</th><th class="n">20</th></tr>
+<tr><td>difficulty</td><td class="n">20</td><td class="n">17</td><td class="n">17</td><td class="n">13</td><td class="n">18</td><td class="n">34</td><td class="n">22</td><td class="n">51</td><td class="n">24</td><td class="n">48</td></tr>
+<tr><td>window time (s)</td><td class="n">11.19</td><td class="n">9.75</td><td class="n">12.83</td><td class="n">7.09</td><td class="n">5.27</td><td class="n">15.29</td><td class="n">4.30</td><td class="n">20.51</td><td class="n">4.99</td><td class="n">10.39</td></tr>
+</table>
+
+<p><b>The clamp is visible at the start.</b> The first two windows were far too fast, and each raised the difficulty by exactly the allowed factor: 1 → 4 → 16. Only from the third window on is the adjustment smaller than four.</p>
+<p><b>Then the difficulty oscillates and does not settle.</b> The lab sheet expects a band of about 1 to 3 for the reference miner. My miner hashes about 1.5 million headers per second, so my equilibrium is higher: 1.54 M × 1 s / 65,536 ≈ 23.5. The difficulty moves around this value, between 13 and 55, rising after a fast window and falling after a slow one. It is not a monotone climb and it does not converge to a constant.</p>
+<p>The reason is that a window does not measure the hash rate, it only <b>estimates</b> it from a few exponentially distributed intervals. The sum of N such intervals has a relative error of 1/√N. For my N = 10 that is about 32 %, and it matches what I see: at an unchanged hash rate the windows took between 4.3 s and 20.5 s. A lucky window (window 6, 6.07 s) pushes the difficulty well above the equilibrium (34 → 55), the next windows are then really too slow, and the loop corrects downwards again. The controller chases its own measurement noise.</p>
+<p><b>Why Bitcoin uses two weeks.</b> With one block per window the error would be about 100 %, and the difficulty would jump by large factors on pure chance. Bitcoin's 2,016 blocks give 1/√2016 ≈ 2.2 %, so an adjustment mostly reflects a real change of hash rate. A long window is also harder to manipulate: with a retarget every block, a miner could move the difficulty with a single false timestamp, while over 2,016 blocks one timestamp changes the measured time by a negligible amount. The price is slow reaction. After a real collapse of hash rate the chain must still finish the current window at the old difficulty, and the 4× clamp then limits how far a single adjustment can go.</p>
+
+<h2>3. Part B — slashing: loss against the number of offenders</h2>
+<p>For each k I created a fresh <code>BeaconState(validator_count=64)</code>, let all 64 validators attest <code>genesis → chain-A</code>, let the first k also attest <code>genesis → chain-B</code>, and processed epoch 1 (<code>pos.slashing_loss</code>).</p>
+
+<table>
+<tr><th>Offenders</th><th class="n">1</th><th class="n">5</th><th class="n">10</th><th class="n">20</th><th class="n">21</th><th class="n">22</th><th class="n">30</th></tr>
+<tr><td>Loss per offender (ETH)</td><td class="n">2.41</td><td class="n">8.06</td><td class="n">15.15</td><td class="n">29.43</td><td class="n">30.87</td><td class="n"><b>32.00</b></td><td class="n"><b>32.00</b></td></tr>
+<tr><td>Lab sheet</td><td class="n">2.41 ✓</td><td class="n">8.06 ✓</td><td class="n">15.15 ✓</td><td class="n">29.43 ✓</td><td class="n"></td><td class="n">32 from about 22 ✓</td><td class="n">32.00 ✓</td></tr>
+</table>
+
+<figure><img src="figures/slashing.svg" alt="Loss per offender against the number of offenders"><figcaption>Figure 3. Loss of each offender for 1 to 32 simultaneous offenders.</figcaption></figure>
+
+<p>The same scenarios in my demo give <code>32.0000 -&gt; 29.5916 ETH</code> (loss 2.4084) for a lone equivocator, <code>32.0000 -&gt; 2.5680 ETH</code> (loss 29.4320 each) for twenty, and <code>slashed : True</code>, <code>rule : surround_vote</code> for the surround vote.</p>
+
+<h3>The shape</h3>
+<p>The penalty has two parts. Every offender first loses 1/32 of its balance, which is 1 ETH. Then comes the correlated part:</p>
+<div class="formula">correlated penalty = balance × min(1, 3 × slashed stake / total stake)</div>
+<p>The fraction grows in proportion to the number of offenders, so the curve is practically a straight line, about 1.4 ETH more per additional offender. It stops growing when 3 × slashed / total reaches 1, that is when one third of the stake is slashed together. With 64 validators this is 21.3 validators, so 21 offenders still keep a little (1.13 ETH) and from 22 on everybody loses the whole 32 ETH.</p>
+
+<h3>Is it fair?</h3>
+<p>I think it is, because the penalty follows the danger and not only the act. A single validator that signs two blocks for the same epoch has almost always made an operational mistake, typically the same key running on two machines. It could not have harmed anyone: one validator out of 64 is far from the one third that Casper needs to be broken. It loses 2.4 ETH, which hurts and is a reason to fix the setup, but it survives.</p>
+<p>The knee of the curve is at exactly the Byzantine threshold. Two conflicting checkpoints can both be finalised only if at least one third of the stake signs both. So when a third of the stake equivocates in the same period, the offence is no longer an accident that could not matter: it is precisely what is needed to break finality, and the protocol takes everything. Between these extremes the loss grows with the share of the stake involved, which means it grows with how close the network came to a real failure.</p>
+<p>There are two things I find less fair. A validator cannot know at the moment of its mistake how many others fail at the same time. If many validators use the same client or the same hosting provider and one bug makes them all equivocate, they are punished like attackers although nobody intended an attack. I accept this, because the protocol cannot see intentions, and because it gives everybody a reason not to run the same setup as everyone else, which makes the network more robust. And a small staker loses the same fraction as a large one, but the large one can afford better operations.</p>
+
+<h2>4. Part B — the inactivity leak</h2>
+<p>I extended Scenario 5 to 100 epochs (<code>pos.inactivity_leak_trace</code>). 40 of 64 validators are offline from the start; the 24 that remain attest in every epoch, always linking from <code>state.current_justified</code>.</p>
+
+<pre>  epoch   1: voting share= 37.5%  leaked= 0.000 ETH  justified=None             finalized=None
+  epoch   4: voting share= 37.5%  leaked= 0.000 ETH  justified=None             finalized=None
+  epoch   5: voting share= 37.9%  leaked=20.000 ETH  justified=None             finalized=None
+  epoch  11: voting share= 40.1%  leaked=18.197 ETH  justified=None             finalized=None
+  epoch  20: voting share= 43.6%  leaked=15.792 ETH  justified=None             finalized=None
+  epoch  40: voting share= 51.4%  leaked=11.525 ETH  justified=None             finalized=None
+  epoch  60: voting share= 59.2%  leaked= 8.411 ETH  justified=None             finalized=None
+  epoch  80: voting share= 66.5%  leaked= 6.139 ETH  justified=None             finalized=None
+  epoch  81: voting share= 66.9%  leaked= 6.043 ETH  justified=None             finalized=None
+  epoch  82: voting share= 67.2%  leaked= 5.948 ETH  justified=(82, root-82)    finalized=None
+  epoch  83: voting share= 67.2%  leaked= 0.000 ETH  justified=(83, root-83)    finalized=(82, root-82)
+  epoch 100: voting share= 67.2%  leaked= 0.000 ETH  justified=(100, root-100)  finalized=(99, root-99)
+  absent validator : 9.3686 ETH at the end
+  present validator: 32.0000 ETH at the end</pre>
+
+<figure><img src="figures/leak.svg" alt="Voting share during the inactivity leak"><figcaption>Figure 4. Share of the active stake held by the 24 voting validators, at the end of each epoch.</figcaption></figure>
+
+<p>What the trace shows, against the lab sheet:</p>
+<ul>
+<li><b>Grace period.</b> Nothing leaks in epochs 1–4. The leak starts in epoch 5 and takes 1/64 of the balance of every absent validator per epoch (40 × 0.5 ETH = 20 ETH in the first leaking epoch).</li>
+<li><b>Voters are spared.</b> A validator that voted in every epoch still has exactly 32 ETH at the end. An absent one has 9.37 ETH.</li>
+<li><b>The share recovers.</b> 37.5 % at the start, 43.6 % at epoch 20, 51.4 % at 40, 59.2 % at 60 (lab sheet: about 44, 51 and 59 %). The share is printed after the leak of the epoch. It passes two thirds at the end of epoch 81, so the votes of epoch 82 are the first to carry a supermajority: <b>justification returns in epoch 82 and finality in epoch 83</b>, when the checkpoint of epoch 82 is finalised (lab sheet: around epoch 81–82, finality one epoch later).</li>
+<li><b>The leak stops.</b> From epoch 83 on nothing is leaked and the share stays at 67.2 %.</li>
+</ul>
+
+<h3>Why the protocol prefers to stall</h3>
+<p>With 40 of 64 validators silent, the 24 that remain cannot know why. The others may have crashed, or they may be alive on the other side of a network partition and voting for a different chain. If the protocol allowed 37.5 % of the stake to finalise, then in the second case the other side could finalise as well, and there would be two final histories that contradict each other. Finality would mean nothing. A late finalisation costs time; a wrong one cannot be repaired, because exchanges and bridges have already acted on it. So Casper chooses safety: without more than two thirds it finalises nothing.</p>
+<p>Stalling forever would be a failure too, and the leak is the way out. It slowly removes the stake of those who do not vote until the voters again hold more than two thirds of what is left. It is deliberately slow (in my model 78 leaking epochs; on Ethereum weeks), which gives a real partition time to heal and operators time to come back before a minority can finalise alone. The cost is paid by the absent validators, including honest ones that were only cut off.</p>
+
+<h2>5. Part C — partition traces for three seeds</h2>
+<p>I ran <code>uv run python -m consensus gossip --nodes 12</code> with seeds 1, 7 and 42. Nodes 0–5 form side A and nodes 6–11 side B. Nodes 0, 3, 6 and 9 mine with equal hash power, so each side has two miners. The network as a whole finds a block every 0.25 s on average, the latency per hop is about 5 ms, and the split lasts 1.5 s.</p>
+
+<pre>seed 1
+  phase 1 (connected)  distinct tips=1 heights=[4] converged=True
+  phase 2 (split)      distinct tips=2 heights=[7, 8]  blocks added: A=+4 B=+3
+  HEAL
+    just after heal    distinct tips=1 heights=[12]
+  phase 3 (healed)     distinct tips=1 heights=[16] converged=True
+seed 7
+  phase 1 (connected)  distinct tips=1 heights=[7] converged=True
+  phase 2 (split)      distinct tips=2 heights=[8, 9]  blocks added: A=+2 B=+1
+  HEAL
+    just after heal    distinct tips=1 heights=[11]
+  phase 3 (healed)     distinct tips=1 heights=[17] converged=True
+seed 42
+  phase 1 (connected)  distinct tips=1 heights=[6] converged=True
+  phase 2 (split)      distinct tips=3 heights=[9, 10]  blocks added: A=+4 B=+4
+  HEAL
+    just after heal    distinct tips=1 heights=[12]
+  phase 3 (healed)     distinct tips=1 heights=[20] converged=True</pre>
+
+<table>
+<tr><th>Seed</th><th>Last common block</th><th>Side heights at the heal</th><th>Reorganisation depths, side A (each node)</th><th>Reorganisation depths, side B (each node)</th><th>End</th></tr>
+<tr><td>1</td><td>height 4</td><td>A 8, B 7</td><td>none</td><td><b>[3]</b> on all six nodes</td><td>one tip, height 16</td></tr>
+<tr><td>7</td><td>height 7</td><td>A 9, B 8</td><td>none</td><td><b>[1]</b> on all six nodes</td><td>one tip, height 17</td></tr>
+<tr><td>42</td><td>height 6</td><td>A 10, B 10 (equal work)</td><td>node0 <b>[4]</b>; nodes 1–5 [1, <b>4</b>]</td><td>[1] on all six nodes</td><td>one tip, height 20</td></tr>
+</table>
+<p class="small">The complete lists (<code>chain.reorg_depths</code> of every node) are in <code>evidence/data/gossip.json</code>. Bold: the reorganisation at the heal. In every run 200 to 234 messages were dropped at the cut.</p>
+
+<p><b>Seed 1 and seed 7.</b> During the split both sides extended their own chain from the last common block. At the heal side B had less work, so every node of B switched to A's branch and rolled back its whole private branch: 3 blocks with seed 1, 1 block with seed 7. The depth equals the number of blocks the lighter side had mined since the fork. The nodes of A recorded nothing; they only stored B's blocks as a losing branch.</p>
+<p><b>Seed 42</b> shows the two other effects. The depth-1 entries on eleven nodes come from an ordinary race in the connected phase: two miners found a block at almost the same time, and the next block decided. At the end of the split there were three tips, because one side was itself in such a race. And at the heal the two sides had <b>equal work</b>. Neither side moved, as the rule demands: the tip changes only on strictly more work. The tie was decided by the next block, which was found on B's branch, and then all nodes of A rolled back 4 blocks.</p>
+<p><b>Transactions.</b> In each run I submitted one transaction to each side during the split. In all three runs each of the six nodes of the losing side put that side's transaction back into its mempool when its blocks were rolled back (6 returns per run) and announced it again, and at the end both split-time transactions were confirmed in the common chain. Nothing was lost; the transactions of the losing side were confirmed twice, once in a block that was later discarded and once in the surviving chain.</p>
+
+<h3>Why longer partitions give deeper reorganisations</h3>
+<p>While the network is split, each side extends its own chain at a rate proportional to its hash power, and the two branches cannot see each other. The branch of the side that loses is exactly what must be thrown away at the heal, and its expected length is (rate of that side) × (duration of the split). It grows linearly with time. A depth-1 reorganisation needs only two blocks within one propagation delay; a depth-10 reorganisation needs a side to work alone for ten of its block intervals.</p>
+<p>I checked this with my simulator: 12 nodes, 10 seeds per duration, and for each run the deepest reorganisation at the heal.</p>
+
+<figure><img src="figures/reorg_sweep.svg" alt="Reorganisation depth against partition length"><figcaption>Figure 5. Grey circles: single runs. Blue: mean of the 10 runs.</figcaption></figure>
+
+<table>
+<tr><th>Partition length</th><th class="n">0.5 s</th><th class="n">1 s</th><th class="n">2 s</th><th class="n">4 s</th><th class="n">8 s</th></tr>
+<tr><td>Mean depth of the heal reorganisation</td><td class="n">0.4</td><td class="n">1.2</td><td class="n">3.8</td><td class="n">6.3</td><td class="n">14.4</td></tr>
+<tr><td>Smallest / largest of 10 runs</td><td class="n">0 / 1</td><td class="n">0 / 2</td><td class="n">2 / 6</td><td class="n">2 / 8</td><td class="n">8 / 18</td></tr>
+</table>
+<p>Each side mines 2 blocks per second, so after 8 s both branches are about 16 blocks long and the shorter one, which is lost, is 14.4 blocks long on average. For a user this means that the number of confirmations that makes a payment safe depends on how long a partition can stay unnoticed.</p>
+
+<h2>6. The three implementations in the CAP and safety / liveness frame</h2>
+<p>The CAP theorem says that during a network partition a system must give up either consistency or availability. The safety / liveness frame says the same from the side of the protocol: safety means that nothing bad happens (two nodes never accept conflicting histories), liveness means that something good eventually happens (transactions get confirmed). My three implementations stand on different sides.</p>
+<p><b>Proof of work with gossip (Parts A and C) gives up consistency.</b> When I split my network, both halves kept mining and kept accepting transactions. The price is that the two halves confirmed different blocks, and at the heal one half had to roll its blocks back: 3 blocks with seed 1, 1 with seed 7 and 4 with seed 42. Safety is therefore only probabilistic. A confirmed block can be reverted, with a probability that falls with every block on top of it but never reaches zero. The sacrifice happens under a partition, under ordinary propagation delay (the depth-1 races), and without any partition when an attacker holds more than half of the hash power. In production I would watch the stale-block rate, the number and depth of reorganisations, nodes or explorers reporting different tips at the same height, and transactions that return from a block to the mempool. A sudden drop of the block rate at unchanged difficulty is the sign that part of the hash power is mining where I cannot see it.</p>
+<p><b>Casper FFG (Part B) gives up liveness of finality.</b> A checkpoint needs links from more than two thirds of the stake. In my leak experiment 40 of 64 validators were offline and nothing was finalised for 82 epochs. The protocol stalled; it never finalised anything wrong. The condition is more than one third of the stake being offline or cut off. In production I would see the participation rate fall below two thirds, the distance between the current epoch and the last finalised epoch grow beyond the normal two, and the inactivity penalties begin.</p>
+<p><b>Slashing and the leak give up the balances of honest validators.</b> The leak restores liveness by draining whoever does not vote, and it cannot tell an attacker from an honest validator on the wrong side of a long partition. In my trace an absent validator fell from 32 to 9.37 ETH. If both sides of a partition leak for long enough, each can regain two thirds of its own remaining stake and finalise its own chain, so a very long partition finally costs safety as well. The observable sign is the balance of validators that are honest but isolated falling epoch after epoch, together with a shrinking total active stake.</p>
+<p>The two designs can be combined, and Ethereum does it: its LMD-GHOST fork choice keeps producing blocks like my proof-of-work network (available), while FFG finality on top stops like my Part B (consistent).</p>
+<p class="small">Word count of this section: 474 (limit 500).</p>
+
+<h2>7. Bonus E1 — double-spend probability</h2>
+<p>In <code>consensus/doublespend.py</code> I implemented the formula of section 11 of the Bitcoin whitepaper and a Monte Carlo simulation of the same race. An attacker with a share q of the hash rate lets the merchant wait for z confirmations and tries to overtake the honest chain with a private one.</p>
+<div class="formula">P = 1 − Σ<sub>k=0..z</sub> (λ<sup>k</sup> e<sup>−λ</sup> / k!) · (1 − (q/p)<sup>z−k</sup>), &nbsp;&nbsp; λ = z·q/p, &nbsp; p = 1 − q</div>
+<p>The simulation follows the same model: per trial I draw the attacker's progress from the Poisson distribution with mean λ and then play the race block by block, where the attacker wins each block with probability q, until it has caught up or is 60 blocks further behind.</p>
+
+<table>
+<tr><th>q</th><th>z</th><th class="n">Formula</th><th class="n">Whitepaper</th><th class="n">Monte Carlo</th><th class="n">Monte Carlo / formula</th><th class="n">Trials</th></tr>
+<tr><td>0.10</td><td>5</td><td class="n">0.0009137</td><td class="n">0.0009137 ✓</td><td class="n">0.0009012</td><td class="n">0.986</td><td class="n">5,000,000</td></tr>
+<tr><td>0.10</td><td>6</td><td class="n">0.0002428</td><td class="n">0.0002428 ✓</td><td class="n">0.0002334</td><td class="n">0.961</td><td class="n">5,000,000</td></tr>
+<tr><td>0.30</td><td>5</td><td class="n">0.1773523</td><td class="n">0.1773523 ✓</td><td class="n">0.1766500</td><td class="n">0.996</td><td class="n">500,000</td></tr>
+</table>
+<table>
+<tr><th>q</th><th class="n">0.10</th><th class="n">0.15</th><th class="n">0.20</th><th class="n">0.25</th><th class="n">0.30</th><th class="n">0.35</th><th class="n">0.40</th><th class="n">0.45</th></tr>
+<tr><td>z needed for P &lt; 0.1 %</td><td class="n"><b>5</b></td><td class="n">8</td><td class="n">11</td><td class="n">15</td><td class="n"><b>24</b></td><td class="n">41</td><td class="n">89</td><td class="n"><b>340</b></td></tr>
+</table>
+
+<p>The formula reproduces the three values of the whitepaper to all seven printed digits, and the table of confirmations needed for P &lt; 0.1 % as well, including the three values named in the lab sheet (z = 5, 24 and 340). The Monte Carlo estimates agree with the formula within the 10 % the lab sheet asks for. For q = 0.1 the event is rare (about one success in 1,100 and in 4,100 trials), so I used 5 million trials there.</p>
+
+<h2>8. Bonus E2 — a miner that scales</h2>
+<p>My parallel miner is a pool from the beginning (<code>pow.MinerPool</code>). The worker processes are started once. For every block each worker receives the header prefix and the target through its own queue and searches the nonces i, i + W, i + 2W, … A shared job number says which search is current. The workers read it every 1,024 hashes; when the main process has a result it sets the number to zero and all other workers stop within a millisecond. Before the first block the pool waits until every worker has reported that it is ready, so process start-up is never measured as mining time. <code>mine_parallel</code> is this pool used for a single block; all its processes have exited when it returns.</p>
+<p>I mined 600 blocks at fixed difficulty 8 with a pool of 1, 2 and 4 workers.</p>
+
+<table>
+<tr><th>Workers</th><th class="n">Mean block time</th><th class="n">Relative to one worker</th><th class="n">Speed-up</th><th class="n">median / mean</th><th class="n">stdev / mean</th></tr>
+<tr><td>1</td><td class="n">0.3417 s</td><td class="n">1</td><td class="n">1.00×</td><td class="n">0.634</td><td class="n">1.067</td></tr>
+<tr><td>2</td><td class="n">0.1751 s</td><td class="n">0.51</td><td class="n">1.95×</td><td class="n">0.683</td><td class="n">1.053</td></tr>
+<tr><td>4</td><td class="n">0.1059 s</td><td class="n">0.31</td><td class="n">3.23×</td><td class="n"><b>0.684</b></td><td class="n"><b>1.037</b></td></tr>
+<tr><td>Expected</td><td class="n"></td><td class="n">1 : ½ : ¼</td><td class="n"></td><td class="n">0.60–0.80</td><td class="n">0.80–1.20</td></tr>
+</table>
+
+<figure><img src="figures/pool_speedup.svg" alt="Speed-up against the number of workers" style="width:60%"><figcaption>Figure 6. Speed-up of the mean block time against one worker.</figcaption></figure>
+<figure><img src="figures/pool_histogram.svg" alt="Histogram of block intervals with four workers" style="width:60%"><figcaption>Figure 7. Block intervals with four workers.</figcaption></figure>
+
+<p><b>The distribution stays exponential.</b> With four workers median / mean is 0.684 and stdev / mean is 1.037, both inside the ranges of Part A, and the histogram has the same shape as Figure 1. This is the result the reference miner cannot give with several workers, because there every interval contains the start of new processes. In my pool the intervals contain only hashing.</p>
+<p><b>The scaling is 1 : 0.51 : 0.31.</b> Two workers halve the block time as the theory says. Four workers give 3.23× and not 4×. To find the reason I measured the machine without my miner (<code>experiments/hashrate.py</code>): I let 1, 2 and 4 processes do nothing but hash at the same time. One process alone reaches 1.50 million hashes per second, but when four run together each reaches only 1.08 to 1.24 million, so the four together deliver 2.9 to 3.3 times the hash rate of one (two runs). The speed-up of my miner, 3.23×, is therefore the speed-up of the hardware. The processor is an Apple M1 with four performance and four efficiency cores, and it does not keep the single-core speed when four cores are loaded; the main process and the operating system also need processor time. The pool itself adds almost nothing: the search is memoryless, so the workers never repeat or wait for each other, and the only overhead per block is one queue message per worker and at most 1,024 hashes (0.7 ms) until a loser notices that the job has changed.</p>
+<p class="small">A first run with 200 blocks per point at difficulty 16 gave 1 : 0.41 : 0.24, which looked better than linear. With 200 exponential intervals the mean has a relative error of about 7 %, so I repeated the measurement with 600 blocks per point and report that one.</p>
+
+<h2>9. Requirements and tests</h2>
+<table>
+<tr><th style="width:4%">#</th><th style="width:22%">Requirement</th><th>Evidence that it is done</th></tr>
+<tr><td>1</td><td>Ledger and fork choice</td><td>A skipped nonce, a repeated nonce and an amount above the balance are rejected with a reason. The tip moves only on strictly more work. After a reorganisation the old branch is still stored, the reported depth equals the blocks rolled back, and the old branch can win the tip back.</td></tr>
+<tr><td>2</td><td>Proof of work</td><td>Every mined block has a header hash below its target and is accepted with <code>check_pow=True</code>. <code>retarget</code> gives 2000 / 500 / 4000 / 250 and never less than 1. Four strided searches together find the same first nonce as the plain search. After <code>mine_parallel</code> no child process is left.</td></tr>
+<tr><td>3</td><td>Interval statistics</td><td>Section 1: 0.676 and 0.960 over 200 single-worker blocks.</td></tr>
+<tr><td>4</td><td>Casper FFG</td><td>With 9 validators 6 votes do not justify and 7 do. Scenario 1 justifies <code>(1, root-1)</code> in epoch 1, finalises it in epoch 2 and finalises <code>(2, root-2)</code> in epoch 3. A supermajority link from an unjustified source changes nothing. A link from epoch 1 to epoch 3 justifies but does not finalise.</td></tr>
+<tr><td>5</td><td>Slashing</td><td>Section 3. Double votes and surround votes are both detected, the surround vote in either order of arrival. Three conflicting votes of one validator slash it once.</td></tr>
+<tr><td>6</td><td>Inactivity leak</td><td>Section 4.</td></tr>
+<tr><td>7</td><td>Gossip network</td><td>Section 5. In my tests every node counts a transaction and a block exactly once, however many peers relay them; nothing crosses a partition, including a message already in flight; after the heal all nodes agree on the heavier tip, and the transaction of the orphaned block is pending again on every node and is then confirmed on the surviving chain.</td></tr>
+</table>
+<pre>$ uv run pytest tests/test_consensus.py
+..........................................                               [100%]
+42 passed
+
+$ uv run pytest
+........................................................................ [ 75%]
+.......................                                                  [100%]
+95 passed</pre>
+
+</body>
+</html>

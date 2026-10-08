@@ -1,0 +1,48 @@
+==============================================================================
+PART A -- proof of work: retargeting, mining, interval statistics
+==============================================================================
+Retarget arithmetic:
+  retarget(1000,   300, 600) = 2000   window twice too fast
+  retarget(1000,  1200, 600) = 500    window twice too slow
+  retarget(1000,     6, 600) = 4000   clamped at x4
+  retarget(1000, 60000, 600) = 250    clamped at /4
+  retarget(1, 10000, 1)      = 1      never below 1
+
+Hash rate of one process: 1,393,728 hashes/s
+Mining 100 blocks at fixed difficulty 8 (1 process)...
+
+blocks mined        : 100
+mean interval       : 0.2911 s
+median interval     : 0.1644 s
+stdev of intervals  : 0.3025 s
+min / max interval  : 0.0001 / 1.2965 s
+difficulty start/end: 8 -> 8
+median / mean       : 0.565   (exponential: ln 2 = 0.693)
+stdev / mean        : 1.039   (exponential: 1.0)
+chain height        : 100
+
+Histogram of block intervals:
+    0.000-  0.130 s   37  ########################################
+    0.130-  0.259 s   25  ###########################
+    0.259-  0.389 s   10  ###########
+    0.389-  0.519 s   11  ############
+    0.519-  0.648 s    6  ######
+    0.648-  0.778 s    2  ##
+    0.778-  0.908 s    2  ##
+    0.908-  1.037 s    4  ####
+    1.037-  1.167 s    1  #
+    1.167-  1.297 s    2  ##
+
+Retargeting every 10 blocks towards 1.00 s per block (1 process)...
+  window  1: difficulty   1  took   0.51 s (goal 10.00 s)
+  window  2: difficulty   4  took   1.07 s (goal 10.00 s)
+  window  3: difficulty  16  took   7.06 s (goal 10.00 s)
+  window  4: difficulty  22  took  13.19 s (goal 10.00 s)
+  window  5: difficulty  16  took   2.68 s (goal 10.00 s)
+  window  6: difficulty  59  took  17.86 s (goal 10.00 s)
+  window  7: difficulty  33  took  10.15 s (goal 10.00 s)
+  window  8: difficulty  32  took  17.32 s (goal 10.00 s)
+  window  9: difficulty  18  took   6.52 s (goal 10.00 s)
+  window 10: difficulty  27  took  14.71 s (goal 10.00 s)
+  difficulty after the last window: 18
+

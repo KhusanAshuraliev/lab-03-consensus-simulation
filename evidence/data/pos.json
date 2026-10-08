@@ -1,0 +1,938 @@
+{
+ "loss_eth_by_offenders": {
+  "1": 2.40840254,
+  "2": 3.818181818,
+  "3": 5.229339853,
+  "4": 6.641878669,
+  "5": 8.055800293,
+  "6": 9.471106758,
+  "7": 10.887800097,
+  "8": 12.305882352,
+  "9": 13.725355566,
+  "10": 15.146221786,
+  "11": 16.568483063,
+  "12": 17.992141453,
+  "13": 19.417199017,
+  "14": 20.843657817,
+  "15": 22.271519921,
+  "16": 23.700787401,
+  "17": 25.131462333,
+  "18": 26.563546798,
+  "19": 27.997042878,
+  "20": 29.431952662,
+  "21": 30.868278243,
+  "22": 32.0,
+  "23": 32.0,
+  "24": 32.0,
+  "25": 32.0,
+  "26": 32.0,
+  "27": 32.0,
+  "28": 32.0,
+  "29": 32.0,
+  "30": 32.0,
+  "31": 32.0,
+  "32": 32.0
+ },
+ "leak_trace": [
+  {
+   "epoch": 1,
+   "voting_share": 0.375,
+   "leaked_gwei": 0,
+   "justified": null,
+   "finalized": null,
+   "absent_balance_gwei": 32000000000,
+   "present_balance_gwei": 32000000000
+  },
+  {
+   "epoch": 2,
+   "voting_share": 0.375,
+   "leaked_gwei": 0,
+   "justified": null,
+   "finalized": null,
+   "absent_balance_gwei": 32000000000,
+   "present_balance_gwei": 32000000000
+  },
+  {
+   "epoch": 3,
+   "voting_share": 0.375,
+   "leaked_gwei": 0,
+   "justified": null,
+   "finalized": null,
+   "absent_balance_gwei": 32000000000,
+   "present_balance_gwei": 32000000000
+  },
+  {
+   "epoch": 4,
+   "voting_share": 0.375,
+   "leaked_gwei": 0,
+   "justified": null,
+   "finalized": null,
+   "absent_balance_gwei": 32000000000,
+   "present_balance_gwei": 32000000000
+  },
+  {
+   "epoch": 5,
+   "voting_share": 0.378698224852071,
+   "leaked_gwei": 20000000000,
+   "justified": null,
+   "finalized": null,
+   "absent_balance_gwei": 31500000000,
+   "present_balance_gwei": 32000000000
+  },
+  {
+   "epoch": 6,
+   "voting_share": 0.38241060591914855,
+   "leaked_gwei": 19687500000,
+   "justified": null,
+   "finalized": null,
+   "absent_balance_gwei": 31007812500,
+   "present_balance_gwei": 32000000000
+  },
+  {
+   "epoch": 7,
+   "voting_share": 0.38613676167731764,
+   "leaked_gwei": 19379882800,
+   "justified": null,
+   "finalized": null,
+   "absent_balance_gwei": 30523315430,
+   "present_balance_gwei": 32000000000
+  },
+  {
+   "epoch": 8,
+   "voting_share": 0.3898763043402809,
+   "leaked_gwei": 19077072120,
+   "justified": null,
+   "finalized": null,
+   "absent_balance_gwei": 30046388627,
+   "present_balance_gwei": 32000000000
+  },
+  {
+   "epoch": 9,
+   "voting_share": 0.39362884000323645,
+   "leaked_gwei": 18778992880,
+   "justified": null,
+   "finalized": null,
+   "absent_balance_gwei": 29576913805,
+   "present_balance_gwei": 32000000000
+  },
+  {
+   "epoch": 10,
+   "voting_share": 0.3973939687800957,
+   "leaked_gwei": 18485571120,
+   "justified": null,
+   "finalized": null,
+   "absent_balance_gwei": 29114774527,
+   "present_balance_gwei": 32000000000
+  },
+  {
+   "epoch": 11,
+   "voting_share": 0.40117128495735244,
+   "leaked_gwei": 18196734040,
+   "justified": null,
+   "finalized": null,
+   "absent_balance_gwei": 28659856176,
+   "present_balance_gwei": 32000000000
+  },
+  {
+   "epoch": 12,
+   "voting_share": 0.40496037717454736,
+   "leaked_gwei": 17912410080,
+   "justified": null,
+   "finalized": null,
+   "absent_balance_gwei": 28212045924,
+   "present_balance_gwei": 32000000000
+  },
+  {
+   "epoch": 13,
+   "voting_share": 0.4087608285643028,
+   "leaked_gwei": 17632528680,
+   "justified": null,
+   "finalized": null,
+   "absent_balance_gwei": 27771232707,
+   "present_balance_gwei": 32000000000
+  },
+  {
+   "epoch": 14,
+   "voting_share": 0.41257221693416524,
+   "leaked_gwei": 17357020440,
+   "justified": null,
+   "finalized": null,
+   "absent_balance_gwei": 27337307196,
+   "present_balance_gwei": 32000000000
+  },
+  {
+   "epoch": 15,
+   "voting_share": 0.41639411492282025,
+   "leaked_gwei": 17085816960,
+   "justified": null,
+   "finalized": null,
+   "absent_balance_gwei": 26910161772,
+   "present_balance_gwei": 32000000000
+  },
+  {
+   "epoch": 16,
+   "voting_share": 0.4202260902183422,
+   "leaked_gwei": 16818851080,
+   "justified": null,
+   "finalized": null,
+   "absent_balance_gwei": 26489690495,
+   "present_balance_gwei": 32000000000
+  },
+  {
+   "epoch": 17,
+   "voting_share": 0.42406770570528207,
+   "leaked_gwei": 16556056520,
+   "justified": null,
+   "finalized": null,
+   "absent_balance_gwei": 26075789082,
+   "present_balance_gwei": 32000000000
+  },
+  {
+   "epoch": 18,
+   "voting_share": 0.4279185196828825,
+   "leaked_gwei": 16297368160,
+   "justified": null,
+   "finalized": null,
+   "absent_balance_gwei": 25668354878,
+   "present_balance_gwei": 32000000000
+  },
+  {
+   "epoch": 19,
+   "voting_share": 0.43177808602704193,
+   "leaked_gwei": 16042721760,
+   "justified": null,
+   "finalized": null,
+   "absent_balance_gwei": 25267286834,
+   "present_balance_gwei": 32000000000
+  },
+  {
+   "epoch": 20,
+   "voting_share": 0.435645954426242,
+   "leaked_gwei": 15792054240,
+   "justified": null,
+   "finalized": null,
+   "absent_balance_gwei": 24872485478,
+   "present_balance_gwei": 32000000000
+  },
+  {
+   "epoch": 21,
+   "voting_share": 0.43952167055934416,
+   "leaked_gwei": 15545303400,
+   "justified": null,
+   "finalized": null,
+   "absent_balance_gwei": 24483852893,
+   "present_balance_gwei": 32000000000
+  },
+  {
+   "epoch": 22,
+   "voting_share": 0.4434047763093049,
+   "leaked_gwei": 15302408040,
+   "justified": null,
+   "finalized": null,
+   "absent_balance_gwei": 24101292692,
+   "present_balance_gwei": 32000000000
+  },
+  {
+   "epoch": 23,
+   "voting_share": 0.4472948099750416,
+   "leaked_gwei": 15063307920,
+   "justified": null,
+   "finalized": null,
+   "absent_balance_gwei": 23724709994,
+   "present_balance_gwei": 32000000000
+  },
+  {
+   "epoch": 24,
+   "voting_share": 0.4511913064804229,
+   "leaked_gwei": 14827943720,
+   "justified": null,
+   "finalized": null,
+   "absent_balance_gwei": 23354011401,
+   "present_balance_gwei": 32000000000
+  },
+  {
+   "epoch": 25,
+   "voting_share": 0.4550937976116709,
+   "leaked_gwei": 14596257120,
+   "justified": null,
+   "finalized": null,
+   "absent_balance_gwei": 22989104973,
+   "present_balance_gwei": 32000000000
+  },
+  {
+   "epoch": 26,
+   "voting_share": 0.45900181220915237,
+   "leaked_gwei": 14368190600,
+   "justified": null,
+   "finalized": null,
+   "absent_balance_gwei": 22629900208,
+   "present_balance_gwei": 32000000000
+  },
+  {
+   "epoch": 27,
+   "voting_share": 0.46291487640769596,
+   "leaked_gwei": 14143687600,
+   "justified": null,
+   "finalized": null,
+   "absent_balance_gwei": 22276308018,
+   "present_balance_gwei": 32000000000
+  },
+  {
+   "epoch": 28,
+   "voting_share": 0.466832513874074,
+   "leaked_gwei": 13922692480,
+   "justified": null,
+   "finalized": null,
+   "absent_balance_gwei": 21928240706,
+   "present_balance_gwei": 32000000000
+  },
+  {
+   "epoch": 29,
+   "voting_share": 0.4707542460290037,
+   "leaked_gwei": 13705150440,
+   "justified": null,
+   "finalized": null,
+   "absent_balance_gwei": 21585611945,
+   "present_balance_gwei": 32000000000
+  },
+  {
+   "epoch": 30,
+   "voting_share": 0.47467959225116674,
+   "leaked_gwei": 13491007440,
+   "justified": null,
+   "finalized": null,
+   "absent_balance_gwei": 21248336759,
+   "present_balance_gwei": 32000000000
+  },
+  {
+   "epoch": 31,
+   "voting_share": 0.4786080701560963,
+   "leaked_gwei": 13280210440,
+   "justified": null,
+   "finalized": null,
+   "absent_balance_gwei": 20916331498,
+   "present_balance_gwei": 32000000000
+  },
+  {
+   "epoch": 32,
+   "voting_share": 0.48253919581273585,
+   "leaked_gwei": 13072707160,
+   "justified": null,
+   "finalized": null,
+   "absent_balance_gwei": 20589513819,
+   "present_balance_gwei": 32000000000
+  },
+  {
+   "epoch": 33,
+   "voting_share": 0.4864724839759084,
+   "leaked_gwei": 12868446120,
+   "justified": null,
+   "finalized": null,
+   "absent_balance_gwei": 20267802666,
+   "present_balance_gwei": 32000000000
+  },
+  {
+   "epoch": 34,
+   "voting_share": 0.49040744832365035,
+   "leaked_gwei": 12667376640,
+   "justified": null,
+   "finalized": null,
+   "absent_balance_gwei": 19951118250,
+   "present_balance_gwei": 32000000000
+  },
+  {
+   "epoch": 35,
+   "voting_share": 0.4943436017122615,
+   "leaked_gwei": 12469448880,
+   "justified": null,
+   "finalized": null,
+   "absent_balance_gwei": 19639382028,
+   "present_balance_gwei": 32000000000
+  },
+  {
+   "epoch": 36,
+   "voting_share": 0.49828045641183066,
+   "leaked_gwei": 12274613760,
+   "justified": null,
+   "finalized": null,
+   "absent_balance_gwei": 19332516684,
+   "present_balance_gwei": 32000000000
+  },
+  {
+   "epoch": 37,
+   "voting_share": 0.5022175243326708,
+   "leaked_gwei": 12082822920,
+   "justified": null,
+   "finalized": null,
+   "absent_balance_gwei": 19030446111,
+   "present_balance_gwei": 32000000000
+  },
+  {
+   "epoch": 38,
+   "voting_share": 0.5061543172813519,
+   "leaked_gwei": 11894028800,
+   "justified": null,
+   "finalized": null,
+   "absent_balance_gwei": 18733095391,
+   "present_balance_gwei": 32000000000
+  },
+  {
+   "epoch": 39,
+   "voting_share": 0.5100903472086737,
+   "leaked_gwei": 11708184600,
+   "justified": null,
+   "finalized": null,
+   "absent_balance_gwei": 18440390776,
+   "present_balance_gwei": 32000000000
+  },
+  {
+   "epoch": 40,
+   "voting_share": 0.5140251264344986,
+   "leaked_gwei": 11525244200,
+   "justified": null,
+   "finalized": null,
+   "absent_balance_gwei": 18152259671,
+   "present_balance_gwei": 32000000000
+  },
+  {
+   "epoch": 41,
+   "voting_share": 0.5179581679164751,
+   "leaked_gwei": 11345162280,
+   "justified": null,
+   "finalized": null,
+   "absent_balance_gwei": 17868630614,
+   "present_balance_gwei": 32000000000
+  },
+  {
+   "epoch": 42,
+   "voting_share": 0.5218889854537029,
+   "leaked_gwei": 11167894120,
+   "justified": null,
+   "finalized": null,
+   "absent_balance_gwei": 17589433261,
+   "present_balance_gwei": 32000000000
+  },
+  {
+   "epoch": 43,
+   "voting_share": 0.5258170939476077,
+   "leaked_gwei": 10993395760,
+   "justified": null,
+   "finalized": null,
+   "absent_balance_gwei": 17314598367,
+   "present_balance_gwei": 32000000000
+  },
+  {
+   "epoch": 44,
+   "voting_share": 0.529742009653007,
+   "leaked_gwei": 10821623960,
+   "justified": null,
+   "finalized": null,
+   "absent_balance_gwei": 17044057768,
+   "present_balance_gwei": 32000000000
+  },
+  {
+   "epoch": 45,
+   "voting_share": 0.5336632503883304,
+   "leaked_gwei": 10652536080,
+   "justified": null,
+   "finalized": null,
+   "absent_balance_gwei": 16777744366,
+   "present_balance_gwei": 32000000000
+  },
+  {
+   "epoch": 46,
+   "voting_share": 0.5375803357908384,
+   "leaked_gwei": 10486090200,
+   "justified": null,
+   "finalized": null,
+   "absent_balance_gwei": 16515592111,
+   "present_balance_gwei": 32000000000
+  },
+  {
+   "epoch": 47,
+   "voting_share": 0.5414927875451467,
+   "leaked_gwei": 10322245040,
+   "justified": null,
+   "finalized": null,
+   "absent_balance_gwei": 16257535985,
+   "present_balance_gwei": 32000000000
+  },
+  {
+   "epoch": 48,
+   "voting_share": 0.5454001296130796,
+   "leaked_gwei": 10160959960,
+   "justified": null,
+   "finalized": null,
+   "absent_balance_gwei": 16003511986,
+   "present_balance_gwei": 32000000000
+  },
+  {
+   "epoch": 49,
+   "voting_share": 0.5493018884649432,
+   "leaked_gwei": 10002194960,
+   "justified": null,
+   "finalized": null,
+   "absent_balance_gwei": 15753457112,
+   "present_balance_gwei": 32000000000
+  },
+  {
+   "epoch": 50,
+   "voting_share": 0.5531975933123144,
+   "leaked_gwei": 9845910680,
+   "justified": null,
+   "finalized": null,
+   "absent_balance_gwei": 15507309345,
+   "present_balance_gwei": 32000000000
+  },
+  {
+   "epoch": 51,
+   "voting_share": 0.5570867763101202,
+   "leaked_gwei": 9692068320,
+   "justified": null,
+   "finalized": null,
+   "absent_balance_gwei": 15265007637,
+   "present_balance_gwei": 32000000000
+  },
+  {
+   "epoch": 52,
+   "voting_share": 0.5609689728069029,
+   "leaked_gwei": 9540629760,
+   "justified": null,
+   "finalized": null,
+   "absent_balance_gwei": 15026491893,
+   "present_balance_gwei": 32000000000
+  },
+  {
+   "epoch": 53,
+   "voting_share": 0.5648437215317937,
+   "leaked_gwei": 9391557400,
+   "justified": null,
+   "finalized": null,
+   "absent_balance_gwei": 14791702958,
+   "present_balance_gwei": 32000000000
+  },
+  {
+   "epoch": 54,
+   "voting_share": 0.5687105648467097,
+   "leaked_gwei": 9244814320,
+   "justified": null,
+   "finalized": null,
+   "absent_balance_gwei": 14560582600,
+   "present_balance_gwei": 32000000000
+  },
+  {
+   "epoch": 55,
+   "voting_share": 0.5725690489336657,
+   "leaked_gwei": 9100364120,
+   "justified": null,
+   "finalized": null,
+   "absent_balance_gwei": 14333073497,
+   "present_balance_gwei": 32000000000
+  },
+  {
+   "epoch": 56,
+   "voting_share": 0.5764187239801271,
+   "leaked_gwei": 8958170920,
+   "justified": null,
+   "finalized": null,
+   "absent_balance_gwei": 14109119224,
+   "present_balance_gwei": 32000000000
+  },
+  {
+   "epoch": 57,
+   "voting_share": 0.5802591444150959,
+   "leaked_gwei": 8818199480,
+   "justified": null,
+   "finalized": null,
+   "absent_balance_gwei": 13888664237,
+   "present_balance_gwei": 32000000000
+  },
+  {
+   "epoch": 58,
+   "voting_share": 0.5840898691120523,
+   "leaked_gwei": 8680415120,
+   "justified": null,
+   "finalized": null,
+   "absent_balance_gwei": 13671653859,
+   "present_balance_gwei": 32000000000
+  },
+  {
+   "epoch": 59,
+   "voting_share": 0.5879104615556465,
+   "leaked_gwei": 8544783640,
+   "justified": null,
+   "finalized": null,
+   "absent_balance_gwei": 13458034268,
+   "present_balance_gwei": 32000000000
+  },
+  {
+   "epoch": 60,
+   "voting_share": 0.5917204900419296,
+   "leaked_gwei": 8411271400,
+   "justified": null,
+   "finalized": null,
+   "absent_balance_gwei": 13247752483,
+   "present_balance_gwei": 32000000000
+  },
+  {
+   "epoch": 61,
+   "voting_share": 0.5955195278600988,
+   "leaked_gwei": 8279845280,
+   "justified": null,
+   "finalized": null,
+   "absent_balance_gwei": 13040756351,
+   "present_balance_gwei": 32000000000
+  },
+  {
+   "epoch": 62,
+   "voting_share": 0.59930715347295,
+   "leaked_gwei": 8150472680,
+   "justified": null,
+   "finalized": null,
+   "absent_balance_gwei": 12836994534,
+   "present_balance_gwei": 32000000000
+  },
+  {
+   "epoch": 63,
+   "voting_share": 0.6030829507151163,
+   "leaked_gwei": 8023121560,
+   "justified": null,
+   "finalized": null,
+   "absent_balance_gwei": 12636416495,
+   "present_balance_gwei": 32000000000
+  },
+  {
+   "epoch": 64,
+   "voting_share": 0.6068465089149832,
+   "leaked_gwei": 7897760280,
+   "justified": null,
+   "finalized": null,
+   "absent_balance_gwei": 12438972488,
+   "present_balance_gwei": 32000000000
+  },
+  {
+   "epoch": 65,
+   "voting_share": 0.6105974231085496,
+   "leaked_gwei": 7774357800,
+   "justified": null,
+   "finalized": null,
+   "absent_balance_gwei": 12244613543,
+   "present_balance_gwei": 32000000000
+  },
+  {
+   "epoch": 66,
+   "voting_share": 0.6143352941374645,
+   "leaked_gwei": 7652883440,
+   "justified": null,
+   "finalized": null,
+   "absent_balance_gwei": 12053291457,
+   "present_balance_gwei": 32000000000
+  },
+  {
+   "epoch": 67,
+   "voting_share": 0.6180597288800304,
+   "leaked_gwei": 7533307160,
+   "justified": null,
+   "finalized": null,
+   "absent_balance_gwei": 11864958778,
+   "present_balance_gwei": 32000000000
+  },
+  {
+   "epoch": 68,
+   "voting_share": 0.6217703403048666,
+   "leaked_gwei": 7415599200,
+   "justified": null,
+   "finalized": null,
+   "absent_balance_gwei": 11679568798,
+   "present_balance_gwei": 32000000000
+  },
+  {
+   "epoch": 69,
+   "voting_share": 0.6254667477194431,
+   "leaked_gwei": 7299730480,
+   "justified": null,
+   "finalized": null,
+   "absent_balance_gwei": 11497075536,
+   "present_balance_gwei": 32000000000
+  },
+  {
+   "epoch": 70,
+   "voting_share": 0.629148576818122,
+   "leaked_gwei": 7185672200,
+   "justified": null,
+   "finalized": null,
+   "absent_balance_gwei": 11317433731,
+   "present_balance_gwei": 32000000000
+  },
+  {
+   "epoch": 71,
+   "voting_share": 0.6328154598467698,
+   "leaked_gwei": 7073396080,
+   "justified": null,
+   "finalized": null,
+   "absent_balance_gwei": 11140598829,
+   "present_balance_gwei": 32000000000
+  },
+  {
+   "epoch": 72,
+   "voting_share": 0.6364670357043292,
+   "leaked_gwei": 6962874240,
+   "justified": null,
+   "finalized": null,
+   "absent_balance_gwei": 10966526973,
+   "present_balance_gwei": 32000000000
+  },
+  {
+   "epoch": 73,
+   "voting_share": 0.6401029501045095,
+   "leaked_gwei": 6854079320,
+   "justified": null,
+   "finalized": null,
+   "absent_balance_gwei": 10795174990,
+   "present_balance_gwei": 32000000000
+  },
+  {
+   "epoch": 74,
+   "voting_share": 0.6437228556733641,
+   "leaked_gwei": 6746984360,
+   "justified": null,
+   "finalized": null,
+   "absent_balance_gwei": 10626500381,
+   "present_balance_gwei": 32000000000
+  },
+  {
+   "epoch": 75,
+   "voting_share": 0.6473264119996932,
+   "leaked_gwei": 6641562720,
+   "justified": null,
+   "finalized": null,
+   "absent_balance_gwei": 10460461313,
+   "present_balance_gwei": 32000000000
+  },
+  {
+   "epoch": 76,
+   "voting_share": 0.6509132858116042,
+   "leaked_gwei": 6537788320,
+   "justified": null,
+   "finalized": null,
+   "absent_balance_gwei": 10297016605,
+   "present_balance_gwei": 32000000000
+  },
+  {
+   "epoch": 77,
+   "voting_share": 0.6544831509995832,
+   "leaked_gwei": 6435635360,
+   "justified": null,
+   "finalized": null,
+   "absent_balance_gwei": 10136125721,
+   "present_balance_gwei": 32000000000
+  },
+  {
+   "epoch": 78,
+   "voting_share": 0.6580356887675836,
+   "leaked_gwei": 6335078560,
+   "justified": null,
+   "finalized": null,
+   "absent_balance_gwei": 9977748757,
+   "present_balance_gwei": 32000000000
+  },
+  {
+   "epoch": 79,
+   "voting_share": 0.6615705876717813,
+   "leaked_gwei": 6236092960,
+   "justified": null,
+   "finalized": null,
+   "absent_balance_gwei": 9821846433,
+   "present_balance_gwei": 32000000000
+  },
+  {
+   "epoch": 80,
+   "voting_share": 0.6650875436999837,
+   "leaked_gwei": 6138654000,
+   "justified": null,
+   "finalized": null,
+   "absent_balance_gwei": 9668380083,
+   "present_balance_gwei": 32000000000
+  },
+  {
+   "epoch": 81,
+   "voting_share": 0.6685862603487445,
+   "leaked_gwei": 6042737520,
+   "justified": null,
+   "finalized": null,
+   "absent_balance_gwei": 9517311645,
+   "present_balance_gwei": 32000000000
+  },
+  {
+   "epoch": 82,
+   "voting_share": 0.67206644869841,
+   "leaked_gwei": 5948319760,
+   "justified": "(82, root-82)",
+   "finalized": null,
+   "absent_balance_gwei": 9368603651,
+   "present_balance_gwei": 32000000000
+  },
+  {
+   "epoch": 83,
+   "voting_share": 0.67206644869841,
+   "leaked_gwei": 0,
+   "justified": "(83, root-83)",
+   "finalized": "(82, root-82)",
+   "absent_balance_gwei": 9368603651,
+   "present_balance_gwei": 32000000000
+  },
+  {
+   "epoch": 84,
+   "voting_share": 0.67206644869841,
+   "leaked_gwei": 0,
+   "justified": "(84, root-84)",
+   "finalized": "(83, root-83)",
+   "absent_balance_gwei": 9368603651,
+   "present_balance_gwei": 32000000000
+  },
+  {
+   "epoch": 85,
+   "voting_share": 0.67206644869841,
+   "leaked_gwei": 0,
+   "justified": "(85, root-85)",
+   "finalized": "(84, root-84)",
+   "absent_balance_gwei": 9368603651,
+   "present_balance_gwei": 32000000000
+  },
+  {
+   "epoch": 86,
+   "voting_share": 0.67206644869841,
+   "leaked_gwei": 0,
+   "justified": "(86, root-86)",
+   "finalized": "(85, root-85)",
+   "absent_balance_gwei": 9368603651,
+   "present_balance_gwei": 32000000000
+  },
+  {
+   "epoch": 87,
+   "voting_share": 0.67206644869841,
+   "leaked_gwei": 0,
+   "justified": "(87, root-87)",
+   "finalized": "(86, root-86)",
+   "absent_balance_gwei": 9368603651,
+   "present_balance_gwei": 32000000000
+  },
+  {
+   "epoch": 88,
+   "voting_share": 0.67206644869841,
+   "leaked_gwei": 0,
+   "justified": "(88, root-88)",
+   "finalized": "(87, root-87)",
+   "absent_balance_gwei": 9368603651,
+   "present_balance_gwei": 32000000000
+  },
+  {
+   "epoch": 89,
+   "voting_share": 0.67206644869841,
+   "leaked_gwei": 0,
+   "justified": "(89, root-89)",
+   "finalized": "(88, root-88)",
+   "absent_balance_gwei": 9368603651,
+   "present_balance_gwei": 32000000000
+  },
+  {
+   "epoch": 90,
+   "voting_share": 0.67206644869841,
+   "leaked_gwei": 0,
+   "justified": "(90, root-90)",
+   "finalized": "(89, root-89)",
+   "absent_balance_gwei": 9368603651,
+   "present_balance_gwei": 32000000000
+  },
+  {
+   "epoch": 91,
+   "voting_share": 0.67206644869841,
+   "leaked_gwei": 0,
+   "justified": "(91, root-91)",
+   "finalized": "(90, root-90)",
+   "absent_balance_gwei": 9368603651,
+   "present_balance_gwei": 32000000000
+  },
+  {
+   "epoch": 92,
+   "voting_share": 0.67206644869841,
+   "leaked_gwei": 0,
+   "justified": "(92, root-92)",
+   "finalized": "(91, root-91)",
+   "absent_balance_gwei": 9368603651,
+   "present_balance_gwei": 32000000000
+  },
+  {
+   "epoch": 93,
+   "voting_share": 0.67206644869841,
+   "leaked_gwei": 0,
+   "justified": "(93, root-93)",
+   "finalized": "(92, root-92)",
+   "absent_balance_gwei": 9368603651,
+   "present_balance_gwei": 32000000000
+  },
+  {
+   "epoch": 94,
+   "voting_share": 0.67206644869841,
+   "leaked_gwei": 0,
+   "justified": "(94, root-94)",
+   "finalized": "(93, root-93)",
+   "absent_balance_gwei": 9368603651,
+   "present_balance_gwei": 32000000000
+  },
+  {
+   "epoch": 95,
+   "voting_share": 0.67206644869841,
+   "leaked_gwei": 0,
+   "justified": "(95, root-95)",
+   "finalized": "(94, root-94)",
+   "absent_balance_gwei": 9368603651,
+   "present_balance_gwei": 32000000000
+  },
+  {
+   "epoch": 96,
+   "voting_share": 0.67206644869841,
+   "leaked_gwei": 0,
+   "justified": "(96, root-96)",
+   "finalized": "(95, root-95)",
+   "absent_balance_gwei": 9368603651,
+   "present_balance_gwei": 32000000000
+  },
+  {
+   "epoch": 97,
+   "voting_share": 0.67206644869841,
+   "leaked_gwei": 0,
+   "justified": "(97, root-97)",
+   "finalized": "(96, root-96)",
+   "absent_balance_gwei": 9368603651,
+   "present_balance_gwei": 32000000000
+  },
+  {
+   "epoch": 98,
+   "voting_share": 0.67206644869841,
+   "leaked_gwei": 0,
+   "justified": "(98, root-98)",
+   "finalized": "(97, root-97)",
+   "absent_balance_gwei": 9368603651,
+   "present_balance_gwei": 32000000000
+  },
+  {
+   "epoch": 99,
+   "voting_share": 0.67206644869841,
+   "leaked_gwei": 0,
+   "justified": "(99, root-99)",
+   "finalized": "(98, root-98)",
+   "absent_balance_gwei": 9368603651,
+   "present_balance_gwei": 32000000000
+  },
+  {
+   "epoch": 100,
+   "voting_share": 0.67206644869841,
+   "leaked_gwei": 0,
+   "justified": "(100, root-100)",
+   "finalized": "(99, root-99)",
+   "absent_balance_gwei": 9368603651,
+   "present_balance_gwei": 32000000000
+  }
+ ]
+}

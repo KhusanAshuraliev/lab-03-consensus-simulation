@@ -1,0 +1,31 @@
+hash rate: 1,542,293 H/s
+blocks mined        : 200
+mean interval       : 0.3369 s
+median interval     : 0.2277 s
+stdev of intervals  : 0.3233 s
+min / max interval  : 0.0007 / 1.8387 s
+difficulty start/end: 8 -> 8
+median / mean       : 0.676   (exponential: ln 2 = 0.693)
+stdev / mean        : 0.960   (exponential: 1.0)
+wrote evidence/data/pow_intervals.json
+window  1: difficulty   1 took   0.23 s
+window  2: difficulty   4 took   1.34 s
+window  3: difficulty  16 took   5.97 s
+window  4: difficulty  26 took   8.75 s
+window  5: difficulty  29 took   8.53 s
+window  6: difficulty  34 took   6.07 s
+window  7: difficulty  55 took  14.53 s
+window  8: difficulty  37 took  15.10 s
+window  9: difficulty  24 took  10.86 s
+window 10: difficulty  22 took  10.76 s
+window 11: difficulty  20 took  11.19 s
+window 12: difficulty  17 took   9.75 s
+window 13: difficulty  17 took  12.83 s
+window 14: difficulty  13 took   7.09 s
+window 15: difficulty  18 took   5.27 s
+window 16: difficulty  34 took  15.29 s
+window 17: difficulty  22 took   4.30 s
+window 18: difficulty  51 took  20.51 s
+window 19: difficulty  24 took   4.99 s
+window 20: difficulty  48 took  10.39 s
+wrote evidence/data/pow_retarget.json

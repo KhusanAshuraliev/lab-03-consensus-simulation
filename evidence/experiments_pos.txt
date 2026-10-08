@@ -1,0 +1,19 @@
+ 1 offenders: 2.4084 ETH
+ 5 offenders: 8.0558 ETH
+10 offenders: 15.1462 ETH
+20 offenders: 29.4320 ETH
+21 offenders: 30.8683 ETH
+22 offenders: 32.0000 ETH
+30 offenders: 32.0000 ETH
+epoch   1: share 0.3750 justified=None finalized=None
+epoch   5: share 0.3787 justified=None finalized=None
+epoch  11: share 0.4012 justified=None finalized=None
+epoch  20: share 0.4356 justified=None finalized=None
+epoch  40: share 0.5140 justified=None finalized=None
+epoch  60: share 0.5917 justified=None finalized=None
+epoch  80: share 0.6651 justified=None finalized=None
+epoch  81: share 0.6686 justified=None finalized=None
+epoch  82: share 0.6721 justified=(82, root-82) finalized=None
+epoch  83: share 0.6721 justified=(83, root-83) finalized=(82, root-82)
+epoch 100: share 0.6721 justified=(100, root-100) finalized=(99, root-99)
+wrote evidence/data/pos.json

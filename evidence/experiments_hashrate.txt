@@ -1,0 +1,14 @@
+1 process(es): total    1,501,218 H/s   per process [1501218]
+2 process(es): total    2,453,719 H/s   per process [1224892, 1228827]
+4 process(es): total    4,369,647 H/s   per process [1083104, 1103991, 1100557, 1081995]
+1 process(es): 1.00x the hash rate of one
+2 process(es): 1.63x the hash rate of one
+4 process(es): 2.91x the hash rate of one
+
+--- second run
+1 process(es): total    1,505,861 H/s   per process [1505861]
+2 process(es): total    2,974,137 H/s   per process [1480991, 1493146]
+4 process(es): total    4,904,489 H/s   per process [1209701, 1234046, 1243953, 1216789]
+1 process(es): 1.00x the hash rate of one
+2 process(es): 1.98x the hash rate of one
+4 process(es): 3.26x the hash rate of one

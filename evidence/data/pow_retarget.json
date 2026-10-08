@@ -1,0 +1,95 @@
+{
+ "machine": {
+  "platform": "macOS-15.3.1-arm64-arm-64bit",
+  "python": "3.12.0",
+  "cpu_count": 8,
+  "hash_rate_one_process": 1542293.219650232
+ },
+ "workers": 1,
+ "target_seconds": 1.0,
+ "retarget_interval": 10,
+ "windows": [
+  {
+   "difficulty": 1,
+   "seconds": 0.22903658500217716
+  },
+  {
+   "difficulty": 4,
+   "seconds": 1.3394231659913203
+  },
+  {
+   "difficulty": 16,
+   "seconds": 5.974450251003873
+  },
+  {
+   "difficulty": 26,
+   "seconds": 8.748084374998143
+  },
+  {
+   "difficulty": 29,
+   "seconds": 8.525410665999516
+  },
+  {
+   "difficulty": 34,
+   "seconds": 6.0744169159952435
+  },
+  {
+   "difficulty": 55,
+   "seconds": 14.532044001003669
+  },
+  {
+   "difficulty": 37,
+   "seconds": 15.096260584006814
+  },
+  {
+   "difficulty": 24,
+   "seconds": 10.855808664000506
+  },
+  {
+   "difficulty": 22,
+   "seconds": 10.764514164988213
+  },
+  {
+   "difficulty": 20,
+   "seconds": 11.191079541000363
+  },
+  {
+   "difficulty": 17,
+   "seconds": 9.752706251005293
+  },
+  {
+   "difficulty": 17,
+   "seconds": 12.834995208999317
+  },
+  {
+   "difficulty": 13,
+   "seconds": 7.0926363749968
+  },
+  {
+   "difficulty": 18,
+   "seconds": 5.268580040992674
+  },
+  {
+   "difficulty": 34,
+   "seconds": 15.287616792007611
+  },
+  {
+   "difficulty": 22,
+   "seconds": 4.302762458999496
+  },
+  {
+   "difficulty": 51,
+   "seconds": 20.507399665002595
+  },
+  {
+   "difficulty": 24,
+   "seconds": 4.9887299179972615
+  },
+  {
+   "difficulty": 48,
+   "seconds": 10.389463833998889
+  }
+ ],
+ "final_difficulty": 46,
+ "equilibrium_estimate": 23.53352691116687
+}

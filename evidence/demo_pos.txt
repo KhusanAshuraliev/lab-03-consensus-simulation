@@ -1,0 +1,40 @@
+==============================================================================
+PART B -- proof of stake: Casper FFG, slashing, inactivity leak
+==============================================================================
+Scenario 1: finality with all validators honest
+  epoch 1: justified=(1, root-1)  finalized=None
+  epoch 2: justified=(2, root-2)  finalized=(1, root-1)
+  epoch 3: justified=(3, root-3)  finalized=(2, root-2)
+
+Scenario 2: one validator double-votes
+  balance : 32.0000 -> 29.5916 ETH
+  loss    : 2.4084 ETH
+
+Scenario 3: twenty validators double-vote together
+  balance : 32.0000 -> 2.5680 ETH
+  loss    : 29.4320 ETH each
+
+Scenario 4: a surround vote
+  slashed : True
+  rule    : surround_vote
+
+Loss per validator against simultaneous offenders (64 validators x 32 ETH):
+  offenders         1       5      10      20      21      22      30
+  loss (ETH)     2.41    8.06   15.15   29.43   30.87   32.00   32.00
+
+Scenario 5: inactivity leak, 40 of 64 validators offline for 100 epochs
+  epoch   1: voting share= 37.5%  leaked= 0.000 ETH  justified=None             finalized=None
+  epoch   4: voting share= 37.5%  leaked= 0.000 ETH  justified=None             finalized=None
+  epoch   5: voting share= 37.9%  leaked=20.000 ETH  justified=None             finalized=None
+  epoch  11: voting share= 40.1%  leaked=18.197 ETH  justified=None             finalized=None
+  epoch  20: voting share= 43.6%  leaked=15.792 ETH  justified=None             finalized=None
+  epoch  40: voting share= 51.4%  leaked=11.525 ETH  justified=None             finalized=None
+  epoch  60: voting share= 59.2%  leaked= 8.411 ETH  justified=None             finalized=None
+  epoch  80: voting share= 66.5%  leaked= 6.139 ETH  justified=None             finalized=None
+  epoch  81: voting share= 66.9%  leaked= 6.043 ETH  justified=None             finalized=None
+  epoch  82: voting share= 67.2%  leaked= 5.948 ETH  justified=(82, root-82)    finalized=None
+  epoch  83: voting share= 67.2%  leaked= 0.000 ETH  justified=(83, root-83)    finalized=(82, root-82)
+  epoch 100: voting share= 67.2%  leaked= 0.000 ETH  justified=(100, root-100)  finalized=(99, root-99)
+  absent validator : 9.3686 ETH at the end
+  present validator: 32.0000 ETH at the end
+

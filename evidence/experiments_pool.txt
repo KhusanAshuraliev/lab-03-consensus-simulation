@@ -1,0 +1,10 @@
+First run: 200 blocks per point, difficulty 16 (superseded by the run below; its JSON was overwritten)
+1 worker(s): mean 0.7150 s  median/mean 0.751  stdev/mean 0.902  (143 s)
+2 worker(s): mean 0.2967 s  median/mean 0.725  stdev/mean 0.916  (59 s)
+4 worker(s): mean 0.1696 s  median/mean 0.587  stdev/mean 1.110  (34 s)
+
+Second run: 600 blocks per point, difficulty 8 (evidence/data/pool_scaling.json)
+1 worker(s): mean 0.3417 s  median/mean 0.634  stdev/mean 1.067  (205 s)
+2 worker(s): mean 0.1751 s  median/mean 0.683  stdev/mean 1.053  (105 s)
+4 worker(s): mean 0.1059 s  median/mean 0.684  stdev/mean 1.037  (64 s)
+wrote evidence/data/pool_scaling.json

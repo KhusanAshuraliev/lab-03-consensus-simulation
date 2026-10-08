@@ -1,0 +1,51 @@
+==============================================================================
+PART C -- gossip network: partition, heal, reorganisation
+==============================================================================
+12 nodes, ring plus random edges, seed 7.
+miners: ['node0', 'node3', 'node6', 'node9']
+
+  phase 1 (connected)  distinct tips=1 heights=[7] converged=True
+  PARTITION  A=['node0', 'node1', 'node2', 'node3', 'node4', 'node5']  B=['node6', 'node7', 'node8', 'node9', 'node10', 'node11']
+  phase 2 (split)      distinct tips=2 heights=[8, 9]  blocks added: A=+2 B=+1
+  HEAL
+    just after heal    distinct tips=1 heights=[11]  (an equal-work tie waits for the next block)
+  phase 3 (healed)     distinct tips=1 heights=[17] converged=True
+
+node     side  height  tip           mined  recv  reorgs  depths
+------------------------------------------------------------------------
+node0    A         17  6ff80f048bbb      4    13       0  []
+node1    A         17  6ff80f048bbb      0    17       0  []
+node2    A         17  6ff80f048bbb      0    17       0  []
+node3    A         17  6ff80f048bbb      7    10       0  []
+node4    A         17  6ff80f048bbb      0    17       0  []
+node5    A         17  6ff80f048bbb      0    17       0  []
+node6    B         17  6ff80f048bbb      5    11       1  [1]
+node7    B         17  6ff80f048bbb      0    16       1  [1]
+node8    B         17  6ff80f048bbb      0    16       1  [1]
+node9    B         17  6ff80f048bbb      2    14       1  [1]
+node10   B         17  6ff80f048bbb      0    16       1  [1]
+node11   B         17  6ff80f048bbb      0    16       1  [1]
+
+messages delivered : 2082
+messages dropped   : 200  (blocked by the partition)
+consensus reached  : True
+
+at the heal: fork at height 7, side heights {'A': 9, 'B': 8}, lighter side B holds 1 private block(s)
+reorganisations at or after the heal, per node:
+  node0   side A: []
+  node1   side A: []
+  node2   side A: []
+  node3   side A: []
+  node4   side A: []
+  node5   side A: []
+  node6   side B: [1]
+  node7   side B: [1]
+  node8   side B: [1]
+  node9   side B: [1]
+  node10  side B: [1]
+  node11  side B: [1]
+
+reorganisations observed across all nodes : 6
+transactions returned to a mempool        : 6
+split-time transactions in the final chain: 2 of 2
+

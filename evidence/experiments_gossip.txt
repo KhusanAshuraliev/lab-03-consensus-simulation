@@ -1,0 +1,30 @@
+--- seed 1
+  phase 1 (connected)  distinct tips=1 heights=[4] converged=True
+  PARTITION  A=['node0', 'node1', 'node2', 'node3', 'node4', 'node5']  B=['node6', 'node7', 'node8', 'node9', 'node10', 'node11']
+  phase 2 (split)      distinct tips=2 heights=[7, 8]  blocks added: A=+4 B=+3
+  HEAL
+    just after heal    distinct tips=1 heights=[12]  (an equal-work tie waits for the next block)
+  phase 3 (healed)     distinct tips=1 heights=[16] converged=True
+  fork at 4, sides {'A': 8, 'B': 7}, lighter B, private branch 3
+--- seed 7
+  phase 1 (connected)  distinct tips=1 heights=[7] converged=True
+  PARTITION  A=['node0', 'node1', 'node2', 'node3', 'node4', 'node5']  B=['node6', 'node7', 'node8', 'node9', 'node10', 'node11']
+  phase 2 (split)      distinct tips=2 heights=[8, 9]  blocks added: A=+2 B=+1
+  HEAL
+    just after heal    distinct tips=1 heights=[11]  (an equal-work tie waits for the next block)
+  phase 3 (healed)     distinct tips=1 heights=[17] converged=True
+  fork at 7, sides {'A': 9, 'B': 8}, lighter B, private branch 1
+--- seed 42
+  phase 1 (connected)  distinct tips=1 heights=[6] converged=True
+  PARTITION  A=['node0', 'node1', 'node2', 'node3', 'node4', 'node5']  B=['node6', 'node7', 'node8', 'node9', 'node10', 'node11']
+  phase 2 (split)      distinct tips=3 heights=[9, 10]  blocks added: A=+4 B=+4
+  HEAL
+    just after heal    distinct tips=1 heights=[12]  (an equal-work tie waits for the next block)
+  phase 3 (healed)     distinct tips=1 heights=[20] converged=True
+  fork at 6, sides {'A': 10, 'B': 10}, lighter tie, private branch 0
+split  0.5 s: depths [0, 1, 0, 1, 0, 1, 0, 0, 1, 0] mean 0.4
+split  1.0 s: depths [1, 2, 0, 2, 1, 2, 2, 0, 1, 1] mean 1.2
+split  2.0 s: depths [3, 4, 3, 3, 4, 5, 2, 4, 6, 4] mean 3.8
+split  4.0 s: depths [5, 8, 7, 6, 6, 7, 2, 8, 8, 6] mean 6.3
+split  8.0 s: depths [8, 18, 17, 12, 13, 16, 12, 14, 17, 17] mean 14.4
+wrote evidence/data/gossip.json
